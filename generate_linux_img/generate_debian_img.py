@@ -10,12 +10,12 @@ def run_cmd(command):
     subprocess.call(command, shell=True)
 
 
-def create_generic_linux_disk_img(img_path, img_name, img_size):
+def create_generic_linux_disk_img(img_path, img_name, img_size, iso_path):
     """Creates generic linux qemu img"""
-    img_path = create_blank_disk_image(img_path, img_name, img_size)
+    create_blank_disk_image(img_path, img_name, img_size, iso_path)
 
 
-def create_blank_disk_image(dest_disk_path, disk_name, disk_size):
+def create_blank_disk_image(dest_disk_path, disk_name, disk_size, iso_path):
     """Creates blank disk image for qemu return image path"""
     path = dest_disk_path + "/" + disk_name
     if os.path.isfile(path):
@@ -27,8 +27,8 @@ def create_blank_disk_image(dest_disk_path, disk_name, disk_size):
 
     cmd = "qemu-img create -f qcow2 %s/%s.img %s" % (dest_disk_path, disk_name, disk_size)
     run_cmd(cmd)
-    return dest_disk_path + "/" + disk_name + ".img"
-
+    disk_path = dest_disk_path + "/" + disk_name + ".img"
+    install_minimal_debian(disk_path, iso_path)
 
 def replicate_linux_image(genr_image_path, dest_disk_path, disk_name):
     """Make a copy of generic image to desired image"""

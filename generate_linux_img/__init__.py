@@ -7,6 +7,7 @@ CONF = ConfigParser.ConfigParser()
 CONF.read(sys.argv[1])
 SECTION_LIST = CONF.sections()
 SERVER_LIST = [section for section in SECTION_LIST if section != 'generic']
+ISO_FILE = sys.argv[2]
 
 def fetch_param(server):
     """Fetch all param for given section"""
@@ -15,11 +16,9 @@ def fetch_param(server):
 def gen_generic_qemu_linux_img():
     """Generate gen qemu linux image"""
     if 'generic' in SECTION_LIST:
-        img_path = CONF.get('generic', 'img_path')
-        img_name = CONF.get('generic', 'img_name')
-        img_size = CONF.get('generic', 'img_size')
-        generate_debian_img.create_generic_linux_disk_img(img_path, img_name, img_size)
-        return img_path + "/" + img_name
+        args = fetch_param('generic')
+        generate_debian_img.create_generic_linux_disk_img(args[0], args[1], args[2], ISO_FILE)
+        return args[0] + "/" + args[1]
 
 def gen_server_qemu_linux_img(genr_image_path):
     """Generate server linux qemu images"""

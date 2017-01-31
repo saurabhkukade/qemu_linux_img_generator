@@ -1,0 +1,14 @@
+#TITLE: Qemu-kvm Linux Image Installer and Generator
+
+Utility written in python to generate linux image for qemu vitual machine.
+
+* Prerequisites
+ - Python 2.7.x
+ - Linux ISO file
+
+* INSTALL
+  Run setup.py to install qemu and related packages
+
+#+BEGIN_SRC shell
+  python setup.py requirments.txt
+#+END_SRC
